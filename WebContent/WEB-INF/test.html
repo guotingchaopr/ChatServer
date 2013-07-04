@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>测试</title>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript">
+	var ws =null ,
+		msg_cache ="" ;
+function startWebSocket() {
+	if (!window.WebSocket) alert("WebSocket not supported by this browser!");
+	// 创建WebSocket
+	ws = new WebSocket("ws://192.169.2.88/TaskChatServer/chat.os?userid="+Math.round(Math.random() *1000 + 1));
+	// 收到消息时在消息框内显示
+	ws.onmessage = function(evt) {
+		var evt_data = evt.data;
+		var pureData = evt_data.split(":")[1];
+		
+			if(pureData==msg_cache){
+				evt_data ="我说："+pureData;
+			}
+		$('#msgBox').append(evt_data+"</br>");
+	};
+	ws.onclose = function() { 
+		console.log('断开');
+	};
+	ws.onopen = function() {   
+		console.log('连接成功'); 
+	};
+}
+  
+// 发送消息
+function sendMsg() {
+	var data = document.getElementById('msgSendBox').value;
+	ws.send(data);
+	msg_cache=data;
+	document.getElementById('msgSendBox').value = '';
+	
+}
+</script>
+</head>
+<body onload="startWebSocket();">
+<div id="msgBox" style="width:400px;height:300px;border:1px solid #000000">
+</div>
+<textarea id="msgSendBox" rows="5" cols="32"></textarea>
+<input type="button" value="send" onclick="sendMsg()"></input>
+</body>
+</html>
