@@ -17,11 +17,12 @@ import org.eclipse.jetty.websocket.WebSocketServlet;
 import com.guotingchao.TaskChat.Server.TaskServerSocket;
 
 /**
- * @ClassName: TaskMainServlet
- * @Description: TODO(TaskSocket分发servlet)
- * @author A18ccms a18ccms_gmail_com
- * @date 2013-7-4 下午8:22:18
  * 
+* @ClassName: TaskMainServlet
+* @Description: TODO(TaskSocket分发servlet)
+* @author guotingchaopr guotingchaopr@gmail.com
+* @date 2013-7-6 下午10:43:11
+*
  */
 public class TaskMainServlet extends WebSocketServlet{
 	private static final long serialVersionUID = 1L;

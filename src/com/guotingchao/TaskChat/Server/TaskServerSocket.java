@@ -10,11 +10,11 @@ import com.guotingchao.TaskChat.Servlet.InitServerServlet;
 
 /**
  * 
- * @ClassName: TaskServerSocket
- * @Description: TODO(通讯主程)
- * @author A18ccms a18ccms_gmail_com
- * @date 2013-7-4 下午7:58:34
- * 
+* @ClassName: TaskServerSocket
+* @Description: TODO(通讯主程)
+* @author guotingchaopr guotingchaopr@gmail.com
+* @date 2013-7-6 下午10:42:42
+*
  */
 public class TaskServerSocket implements OnTextMessage {
 	private Logger log = Logger.getLogger(TaskServerSocket.class);
