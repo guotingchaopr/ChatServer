@@ -5,8 +5,8 @@
 </welcome-file-list>
   <display-name>TaskChatServer</display-name>
   <servlet>
-  	<servlet-name>InitServlet</servlet-name>
-  	<servlet-class>com.guotingchao.TaskChat.Servlet.InitServerServlet</servlet-class>
+  	<servlet-name>ServerPoolServlet</servlet-name>
+  	<servlet-class>com.guotingchao.TaskChat.Servlet.ServerPoolServlet</servlet-class>
   	<load-on-startup>1</load-on-startup>
   </servlet>
   

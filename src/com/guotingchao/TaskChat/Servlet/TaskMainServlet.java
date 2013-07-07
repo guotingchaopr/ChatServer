@@ -38,8 +38,6 @@ public class TaskMainServlet extends WebSocketServlet{
 	 */
 	@Override
 	public WebSocket doWebSocketConnect(HttpServletRequest request, String args) {
-		Long userId= Long.parseLong(request.getParameter("userid"));
-		log.info("args: "+args +" \t userId: " +userId);
-		return new TaskServerSocket(userId);
+		return new TaskServerSocket();
 	}
 }
