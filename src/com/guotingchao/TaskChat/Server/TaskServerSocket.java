@@ -1,12 +1,10 @@
 package com.guotingchao.TaskChat.Server;
 
-import java.io.IOException;
-import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.websocket.WebSocket.OnTextMessage;
 
-import com.guotingchao.TaskChat.Servlet.InitServerServlet;
+import com.guotingchao.TaskChat.Api.SendMessage;
+import com.guotingchao.TaskChat.Servlet.ServerPoolServlet;
 
 /**
  * 
@@ -19,19 +17,8 @@ import com.guotingchao.TaskChat.Servlet.InitServerServlet;
 public class TaskServerSocket implements OnTextMessage {
 	private Logger log = Logger.getLogger(TaskServerSocket.class);
 	private Connection conn;
-	private Long userid;
-
-	/**
-	 * <p>
-	 * Title:
-	 * </p>
-	 * <p>
-	 * Description:
-	 * </p>
-	 */
-	public TaskServerSocket(Long userId) {
-		this.userid = userId;
-	}
+	private Long sinceId;
+	private Long secret;
 
 	/**
 	 * [重载方法]
@@ -48,8 +35,7 @@ public class TaskServerSocket implements OnTextMessage {
 	 */
 	@Override
 	public void onClose(int index, String time) {
-		InitServerServlet.getTaskServerSocketList().remove(this);
-		log.info(this.userid+" 断开：" + time);
+		ServerPoolServlet.getTaskServerSocketList().remove(this);
 	}
 
 	/**
@@ -66,9 +52,8 @@ public class TaskServerSocket implements OnTextMessage {
 	 */
 	@Override
 	public void onOpen(Connection conn) {
-		log.info("新用户" +this.userid +"接入");
 		this.conn = conn;
-		InitServerServlet.getTaskServerSocketList().add(this);
+		ServerPoolServlet.getTaskServerSocketList().add(this);
 	}
 
 	/**
@@ -85,15 +70,7 @@ public class TaskServerSocket implements OnTextMessage {
 	 */
 	@Override
 	public void onMessage(String message) {
-		List<TaskServerSocket> socketList = InitServerServlet
-				.getTaskServerSocketList();
-		for (TaskServerSocket socket : socketList) {
-			try {
-				socket.getConn().sendMessage(this.userid+" 说:"+message);
-			} catch (IOException e) {
-				log.error(e.getMessage());
-			}
-		}
+		new SendMessage(ServerPoolServlet.getTaskServerSocketList(), message);
 	}
 
 	public Connection getConn() {
@@ -104,11 +81,20 @@ public class TaskServerSocket implements OnTextMessage {
 		this.conn = conn;
 	}
 
-	public Long getUserid() {
-		return userid;
+	public Long getSinceId() {
+		return sinceId;
 	}
 
-	public void setUserid(Long userid) {
-		this.userid = userid;
+	public void setSinceId(Long sinceId) {
+		this.sinceId = sinceId;
 	}
+
+	public Long getSecret() {
+		return secret;
+	}
+
+	public void setSecret(Long secret) {
+		this.secret = secret;
+	}
+
 }
