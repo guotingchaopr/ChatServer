@@ -8,6 +8,7 @@
  */
 package com.guotingchao.TaskChat.Pojo;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 /**
@@ -21,8 +22,8 @@ public class UserPojo{
 	private Long id;
 	private String uname;
 	private String upass;
-	private String flag;
-	private String role;
+	private int flag;
+	private int role;
 	private Date create_time;
 
 	public Long getId() {
@@ -49,19 +50,19 @@ public class UserPojo{
 		this.upass = upass;
 	}
 
-	public String getFlag() {
+	public int getFlag() {
 		return flag;
 	}
 
-	public void setFlag(String flag) {
+	public void setFlag(int flag) {
 		this.flag = flag;
 	}
 
-	public String getRole() {
+	public int getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(int role) {
 		this.role = role;
 	}
 
