@@ -8,12 +8,17 @@
 */
 package com.guotingchao.TaskChat.Servlet;
 
+import java.sql.SQLException;
+import java.util.Collection;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketServlet;
 
+import com.guotingchao.TaskChat.DataSource.DbFactoryDAO;
+import com.guotingchao.TaskChat.Pojo.UserPojo;
 import com.guotingchao.TaskChat.Server.TaskServerSocket;
 
 /**
@@ -38,6 +43,14 @@ public class TaskMainServlet extends WebSocketServlet{
 	 */
 	@Override
 	public WebSocket doWebSocketConnect(HttpServletRequest request, String args) {
+		Collection<Object> c = null;
+		c = DbFactoryDAO.executeQueryBySQL("select * from user",UserPojo.class);
+		for(Object u : c){
+			UserPojo user = (UserPojo)u;
+			System.out.println(user.getUname());
+			System.out.println(user.getCreate_time());
+		}
 		return new TaskServerSocket();
 	}
 }
+

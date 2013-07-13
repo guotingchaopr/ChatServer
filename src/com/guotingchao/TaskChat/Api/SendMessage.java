@@ -10,15 +10,19 @@ package com.guotingchao.TaskChat.Api;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.guotingchao.TaskChat.DataSource.DbFactoryDAO;
+import com.guotingchao.TaskChat.Pojo.UserPojo;
 import com.guotingchao.TaskChat.Server.TaskServerSocket;
 
 /**
  * @ClassName: OnMessage
- * @Description: TODO(这里用一句话描述这个类的作用)
+ * @Description: TODO(发送消息)
  * @author guotingchaopr guotingchaopr@gmail.com
  * @date 2013-7-7 上午11:18:44
  * 

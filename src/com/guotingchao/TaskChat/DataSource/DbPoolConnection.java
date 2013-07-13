@@ -8,8 +8,6 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import javax.sql.DataSource;
-
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.alibaba.druid.pool.DruidPooledConnection;
@@ -48,7 +46,6 @@ public class DbPoolConnection {
 					"Properties file path can not be null : " + fullFile);
 		webRootPath = DbPoolConnection.class.getClassLoader().getResource("")
 				.getPath();
-		webRootPath = new File(webRootPath).getParent();
 		InputStream inputStream = null;
 		Properties p = null;
 		try {
@@ -72,5 +69,4 @@ public class DbPoolConnection {
 		}
 		return p;
 	}
-	
 }
