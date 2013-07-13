@@ -2,10 +2,14 @@ package com.guotingchao.TaskChat.Util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+
+import org.apache.log4j.Logger;
+
 import com.guotingchao.TaskChat.MyExceptions.DataException;
 
 /**
@@ -17,6 +21,7 @@ import com.guotingchao.TaskChat.MyExceptions.DataException;
  * @version V1.0
  */
 public class DataUtil {
+	private static Logger log  = Logger.getLogger(DataUtil.class);
 	/**
 	 * 
 	 * @Title: getDatas
@@ -30,27 +35,14 @@ public class DataUtil {
 	 * @return Collection 返回类型
 	 * @throws
 	 */
-	public static Collection getDatas(Collection conn, ResultSet rs,
-			Class clazz) throws DataException, Exception {
+	public static Collection getDatas(Collection conn, ResultSet rs,Class clazz) throws DataException, Exception {
 		try {
 			while (rs.next()) {
-				// 创建类的实例
 				Object vo = clazz.newInstance();
-				// 获取本对象的属性
 				Field[] fields = clazz.getDeclaredFields();
-				// 获取父类的属性
-				// Field[] superFields =
-				// clazz.getSuperclass().getDeclaredFields();
-				// //父类的属性和自己的属性相加
-				// Field[] allFields = addFields(superFields, fields);
-				// 遍历所有的属性
 				for (Field field : fields) {
-					// 获得setter方法的方法名
-					String setterMethodName = getSetterMethodName(field
-							.getName());
-					// 获得setter方法
-					Method setterMethod = clazz.getMethod(setterMethodName,
-							field.getType());
+					String setterMethodName = getSetterMethodName(field.getName());
+					Method setterMethod = clazz.getMethod(setterMethodName,field.getType());
 					invokeMethod(rs, field, vo, setterMethod);
 				}
 				conn.add(vo);
@@ -76,13 +68,18 @@ public class DataUtil {
 	 */
 	private static void invokeMethod(ResultSet rs, Field field, Object vo,
 			Method setterMethod) {
+		Object value = null;
 		try {
-			// 当使用ResultSet获取某个字段的时候, 如果没有该字段, 会出现SQLException, 在这里忽略该异常
-			String value = rs.getString(field.getName());
-			// 从ResultSet中获取与该对象属性名一致的字段, 并执行setter方法
-			setterMethod.invoke(vo, value);
+			 value = rs.getObject(field.getName());
+			 if(value.getClass()==BigInteger.class){ //如果是BigInteger 特殊化处理一下 
+				 //调试中遇到的问题 不知道是不是最优解决
+				 setterMethod.invoke(vo, ((BigInteger)value).longValue());
+			 }else{
+				 setterMethod.invoke(vo, value);
+			 }
+			 
 		} catch (Exception e) {
-			// 忽略异常
+			log.error(e.getMessage()+"value: "+value +" valueType:"+value.getClass());
 		}
 	}
 
