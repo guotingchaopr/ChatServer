@@ -16,7 +16,6 @@ import java.util.Collection;
 
 import com.alibaba.druid.pool.DruidPooledConnection;
 import com.guotingchao.TaskChat.MyExceptions.DataException;
-import com.guotingchao.TaskChat.Pojo.T;
 import com.guotingchao.TaskChat.Util.DataUtil;
 
 /**
