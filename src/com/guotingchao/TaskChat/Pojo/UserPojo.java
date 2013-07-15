@@ -8,7 +8,6 @@
  */
 package com.guotingchao.TaskChat.Pojo;
 
-import java.math.BigInteger;
 import java.util.Date;
 
 /**

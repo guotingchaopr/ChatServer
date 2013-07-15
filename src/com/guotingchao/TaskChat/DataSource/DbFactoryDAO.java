@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.alibaba.druid.pool.DruidPooledConnection;
+import com.guotingchao.TaskChat.Handle.DataHandle;
 import com.guotingchao.TaskChat.MyExceptions.DataException;
-import com.guotingchao.TaskChat.Util.DataUtil;
 
 /**
  * @ClassName: DbFactoryDAO
@@ -56,13 +56,13 @@ public  class DbFactoryDAO {
 			conn = dbp.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
-			c = DataUtil.getDatas(new ArrayList<Object>(), rs, classz);
+			c = DataHandle.getResultCollection(new ArrayList<Object>(), rs, classz);
 		} catch (DataException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
-			DataUtil.colseAll(conn,rs);
+			DataHandle.colseAll(conn,rs);
 		}
 		return c;
 	}

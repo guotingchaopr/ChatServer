@@ -1,4 +1,4 @@
-package com.guotingchao.TaskChat.Util;
+package com.guotingchao.TaskChat.Handle;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -8,9 +8,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import javax.xml.crypto.Data;
+
 import org.apache.log4j.Logger;
 
+import com.alibaba.druid.sql.parser.SQLParser;
 import com.guotingchao.TaskChat.MyExceptions.DataException;
+import com.guotingchao.TaskChat.Pojo.UserPojo;
 
 /**
  * @Title: DataUtil.java
@@ -20,11 +24,11 @@ import com.guotingchao.TaskChat.MyExceptions.DataException;
  * @date 2013-7-13 下午10:29:39
  * @version V1.0
  */
-public class DataUtil {
-	private static Logger log  = Logger.getLogger(DataUtil.class);
+public class DataHandle {
+	private static Logger log  = Logger.getLogger(DataHandle.class);
 	/**
 	 * 
-	 * @Title: getDatas
+	 * @Title: getResultCollection
 	 * @Description: TODO(将ResultSet中的值封装成一个集合)
 	 * @param @param result
 	 * @param @param rs
@@ -35,7 +39,7 @@ public class DataUtil {
 	 * @return Collection 返回类型
 	 * @throws
 	 */
-	public static Collection getDatas(Collection conn, ResultSet rs,Class clazz) throws DataException, Exception {
+	public static<T> Collection<Object> getResultCollection(Collection<Object> conn, ResultSet rs,Class<T> clazz) throws DataException, Exception {
 		try {
 			while (rs.next()) {
 				Object vo = clazz.newInstance();
@@ -46,6 +50,7 @@ public class DataUtil {
 					invokeMethod(rs, field, vo, setterMethod);
 				}
 				conn.add(vo);
+				
 			}
 			rs.close();
 		} catch (Exception e) {
@@ -118,5 +123,19 @@ public class DataUtil {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static<T> String ClassDismantle(Class<T> t,String tableName){
+		Field[] fields = t.getDeclaredFields();
+		StringBuffer fieldsBuffer = new StringBuffer();
+		for(Field field: fields){
+			fieldsBuffer.append(field.getName()+",");
+		}
+		return null;
+		
+	}
+	public static void main(String[] args) {
+		UserPojo user = new UserPojo();
+		DataHandle.ClassDismantle(user.getClass(),"User");
 	}
 }

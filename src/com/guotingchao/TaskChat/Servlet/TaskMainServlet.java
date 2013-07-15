@@ -8,17 +8,12 @@
 */
 package com.guotingchao.TaskChat.Servlet;
 
-import java.sql.SQLException;
-import java.util.Collection;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketServlet;
 
-import com.guotingchao.TaskChat.DataSource.DbFactoryDAO;
-import com.guotingchao.TaskChat.Pojo.UserPojo;
 import com.guotingchao.TaskChat.Server.TaskServerSocket;
 
 /**
